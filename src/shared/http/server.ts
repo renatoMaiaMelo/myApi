@@ -1,16 +1,10 @@
-import express from 'express'
-import 'express-async-errors'
-import cors from 'cors'
+import 'dotenv/config'
+import 'reflect-metadata'
+import { app } from './app'
+import { dataSource } from '@shared/typeorm'
 
-const app = express()
-
-app.use(cors())
-app.use(express.json())
-
-app.get('/', (req, res) => {
-  return res.json({ message: 'Hello World' })
-})
-
-app.listen(3000, () => {
-  console.log('listening on port 3000')
+dataSource.initialize().then(() => {
+  app.listen(process.env.PORT, () => {
+    console.log(`listening on port ${process.env.PORT}`)
+  })
 })
